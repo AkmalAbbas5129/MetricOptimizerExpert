@@ -129,27 +129,27 @@ def get_response_ai(human_msg):
 
     chain = prompt | get_llm_model()
 
-    chain_with_message_history = RunnableWithMessageHistory(
-        chain,
-        lambda session_id: demo_ephemeral_chat_history,
-        input_messages_key="input",
-        history_messages_key="chat_history",
-        verbose=True
-    )
-
-    chain_with_message_history = RunnableWithMessageHistory(
-        chain,
-        lambda session_id: demo_ephemeral_chat_history,
-        input_messages_key="input",
-        history_messages_key="chat_history",
-    )
-
-    # chain_with_summarization = (
-    #         RunnablePassthrough.assign(messages_summarized=summarize_messages)
-    #         | chain_with_message_history
+    # chain_with_message_history = RunnableWithMessageHistory(
+    #     chain,
+    #     lambda session_id: demo_ephemeral_chat_history,
+    #     input_messages_key="input",
+    #     history_messages_key="chat_history",
+    #     verbose=True
     # )
 
-    msg = chain_with_message_history.invoke(
+    # chain_with_message_history = RunnableWithMessageHistory(
+    #     chain,
+    #     lambda session_id: demo_ephemeral_chat_history,
+    #     input_messages_key="input",
+    #     history_messages_key="chat_history",
+    # )
+
+    chain_with_summarization = (
+            RunnablePassthrough.assign(messages_summarized=summarize_messages)
+            | chain_with_message_history
+    )
+
+    msg = chain_with_summarization.invoke(
         {"input": human_msg},
         {"configurable": {"session_id": "unused"}},
     )
