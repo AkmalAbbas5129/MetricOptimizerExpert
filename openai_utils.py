@@ -10,6 +10,7 @@ from langchain_core.runnables.history import RunnableWithMessageHistory
 from langchain_core.runnables import RunnablePassthrough
 from langchain_core.pydantic_v1 import BaseModel, Field
 from langchain.output_parsers import PydanticOutputParser
+import streamlit as st
 
 load_dotenv()
 
@@ -17,9 +18,9 @@ load_dotenv()
 def get_llm_model():
     llm = AzureChatOpenAI(
         model_name="gpt-35-turbo-16k",
-        deployment_name=os.environ["AZURE_DEPLOYMENT_NAME"],
-        openai_api_key=os.environ["AZURE_OPENAI_API_KEY"],
-        azure_endpoint=os.environ["AZURE_OPENAI_ENDPOINT"],
+        deployment_name=st.secrets.openai["deployment_name"],
+        openai_api_key=st.secrets.openai["openai_api_key"],
+        azure_endpoint=st.secrets.openai["azure_endpoint"],
         openai_api_type="azure",
         openai_api_version="2023-03-15-preview",
     )
@@ -68,12 +69,29 @@ def get_response_ai(human_msg):
     """
 
     # Initial Version
-    template = """I want you to act like an Expert in Linear Programming and Mathematical Expert who can optimize the
-    workflows and can give insights on the problems. User will ask you to optimize something about their businesses.
-    You will ask questions if necessary from them so that to complete your formulation. Once you have asked possible
-    questions then you will do calculation with your extensive knowledge and give the optimal solution to optimize the 
-    metrics asked by user and will write a report in a way so that a layman can also understand it.
-    
+    # template = """I want you to act like an Expert in Linear Programming and Mathematical Expert who can optimize the
+    # workflows and can give insights on the problems. User will ask you to optimize something about their businesses.
+    # You will ask questions if necessary from them so that to complete your formulation. Once you have asked possible
+    # questions then you will do calculation with your extensive knowledge and give the optimal solution to optimize the
+    # metrics asked by user and will write a report in a way so that a layman can also understand it.
+    #
+    #
+    # Current conversation:
+    # {chat_history}
+    # Human: {input}
+    # AI Assistant:"""
+
+    #------------------------------------------------------------------
+    template = """
+    I want you to act like an Expert Mathematics and Linear Programming Expert who solves optimization problems computationaly.
+    You will be given a problem by Human to optimize metrics. Your Job is to ask questions to complete your
+    prerequiste to solve the optimiztion problems.
+    Once you have completed your formulation then you will do the calculations and will provide the Human with
+    optimal solution and conclusions. 
+    First perform an initial calculation and then recheck it so that no mistake should be there.
+    Once the calculation and optimal solution is found, then you will switch role to being an expert writer and will
+    write the conclusion in such a way that even a layman can understand it. Your answer should contain steps which you have
+    performed to solve the optimization problem and conclusion in the end.
 
     Current conversation:
     {chat_history}
@@ -119,19 +137,19 @@ def get_response_ai(human_msg):
         verbose=True
     )
 
-    # chain_with_message_history = RunnableWithMessageHistory(
-    #     chain,
-    #     lambda session_id: demo_ephemeral_chat_history_for_chain,
-    #     input_messages_key="input",
-    #     history_messages_key="chat_history",
-    # )
-
-    chain_with_summarization = (
-            RunnablePassthrough.assign(messages_summarized=summarize_messages)
-            | chain_with_message_history
+    chain_with_message_history = RunnableWithMessageHistory(
+        chain,
+        lambda session_id: demo_ephemeral_chat_history,
+        input_messages_key="input",
+        history_messages_key="chat_history",
     )
 
-    msg = chain_with_summarization.invoke(
+    # chain_with_summarization = (
+    #         RunnablePassthrough.assign(messages_summarized=summarize_messages)
+    #         | chain_with_message_history
+    # )
+
+    msg = chain_with_message_history.invoke(
         {"input": human_msg},
         {"configurable": {"session_id": "unused"}},
     )

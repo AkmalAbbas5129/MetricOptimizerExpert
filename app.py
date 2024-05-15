@@ -1,6 +1,6 @@
 import streamlit as st
 from openai_utils import get_response_ai
-st.title("Echo Bot")
+st.title("Optimizer Bot")
 
 # Initialize chat history
 if "messages" not in st.session_state:
