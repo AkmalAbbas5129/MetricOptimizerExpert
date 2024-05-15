@@ -129,13 +129,13 @@ def get_response_ai(human_msg):
 
     chain = prompt | get_llm_model()
 
-    # chain_with_message_history = RunnableWithMessageHistory(
-    #     chain,
-    #     lambda session_id: demo_ephemeral_chat_history,
-    #     input_messages_key="input",
-    #     history_messages_key="chat_history",
-    #     verbose=True
-    # )
+    chain_with_message_history = RunnableWithMessageHistory(
+        chain,
+        lambda session_id: demo_ephemeral_chat_history,
+        input_messages_key="input",
+        history_messages_key="chat_history",
+        verbose=True
+    )
 
     # chain_with_message_history = RunnableWithMessageHistory(
     #     chain,
