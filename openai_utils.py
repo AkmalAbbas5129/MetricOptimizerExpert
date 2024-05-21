@@ -16,17 +16,9 @@ load_dotenv()
 
 
 def get_llm_model():
-    # llm = AzureChatOpenAI(
-    #     model_name="gpt-35-turbo-16k",
-    #     deployment_name=st.secrets.openai["deployment_name"],
-    #     openai_api_key=st.secrets.openai["openai_api_key"],
-    #     azure_endpoint=st.secrets.openai["azure_endpoint"],
-    #     openai_api_type="azure",
-    #     openai_api_version="2023-03-15-preview"
-    # )
     llm = AzureChatOpenAI(
         # model_name="gpt-35-turbo-16k",
-        model_name = "gpt-4o",
+        model_name="gpt-4o",
         deployment_name=st.secrets.openai["deployment_name"],
         openai_api_key=st.secrets.openai["openai_api_key"],
         azure_endpoint=st.secrets.openai["azure_endpoint"],
@@ -70,34 +62,73 @@ class InsightsModel(BaseModel):
     report: str = Field(description="Code written in Python or reply from Model")
 
 
-def get_response_ai(human_msg):
+def solve_optimization_problem(problem_statement, objective, constraints):
+    template_string = """
+    I want you to act like an Expert Mathematics and Linear Programming Expert who solves optimization 
+    problems computationally and the calculations are perfect everytime you solve something.
+    Following are the details of the optimization problem. Your job is to understand the problem
+    with the help of problem statement, objective to solve and constraints which needs to be followed.
+    After understanding please perform the calculation like an expert and find solution to the problem.
+    Once the calculation and optimal solution is found, then you will switch role to 
+    being an expert writer and will write the report and conclusion in such a way that layman can understand it. 
+    Please write your responses in concise and understandable way and no longer text.
+    
+    Problem Statement: {problem_statement}
+    Objective to solve: {objective}
+    Constraints: {constraints}
 
+    Please follow the following guidelines and you will be punished if you will not follow
+    the guidelines
+
+    1. Your calculations will always be perfect.
+    2. Do not output anything extra from your own.
+    3. Solution to the answer should be written in a format and language which is easy to understand by anyone.
+    4. Don't output calculations, just output answer and explaination of the steps.
+
+    Solution Answer:
+    """
+    prompt_template = ChatPromptTemplate.from_template(template_string)
+
+    chain = prompt_template | get_llm_model()
+
+    generated_answer = chain.invoke({
+        "problem_statement": problem_statement,
+        "objective": objective,
+        "constraints": constraints
+    })
+    print(generated_answer.content)
+    return generated_answer.content
+
+
+def get_response_ai(human_msg):
     """
     After this being acting as an expert in the field you will also write your insights as a report in a nice format so
     that user can understand it better.
     """
 
-    # Initial Version
-    # template = """I want you to act like an Expert in Linear Programming and Mathematical Expert who can optimize the
-    # workflows and can give insights on the problems. User will ask you to optimize something about their businesses.
-    # You will ask questions if necessary from them so that to complete your formulation. Once you have asked possible
-    # questions then you will do calculation with your extensive knowledge and give the optimal solution to optimize the
-    # metrics asked by user and will write a report in a way so that a layman can also understand it.
-    #
+    # ------------------------------------------------------------------
+    # template = """I want you to act like an Expert Mathematics and Linear Programming Expert who solves optimization
+    # problems computationaly. You will be given a problem by Human to optimize metrics. Your Job is to ask questions
+    # to complete your prerequisite to solve the optimization problems. Once you have completed your formulation then
+    # you will do the directly perform the calculations. First perform an initial calculation and then recheck it so
+    # that no mistake should be there. Once the calculation and optimal solution is found, then you will switch role to
+    # being an expert writer and will write the conclusion in such a way that even a layman can understand it. Your
+    # answer should contain steps which you have performed to solve the optimization problem and conclusion in the end.
+    # Please write your responses in concise and understandable way and no longer text.
     #
     # Current conversation:
     # {chat_history}
     # Human: {input}
     # AI Assistant:"""
 
-    #------------------------------------------------------------------
+    # ------------------------------------------------------------------
     template = """I want you to act like an Expert Mathematics and Linear Programming Expert who solves optimization 
-    problems computationaly. You will be given a problem by Human to optimize metrics. Your Job is to ask questions 
+    problems computationaly and the calculations are perfect everytime you solve something. 
+    You will be given a problem by Human to optimize metrics. Your Job is to ask questions 
     to complete your prerequisite to solve the optimization problems. Once you have completed your formulation then 
     you will do the directly perform the calculations. First perform an initial calculation and then recheck it so 
     that no mistake should be there. Once the calculation and optimal solution is found, then you will switch role to 
-    being an expert writer and will write the conclusion in such a way that even a layman can understand it. Your 
-    answer should contain steps which you have performed to solve the optimization problem and conclusion in the end. 
+    being an expert writer and will write the conclusion in such a way that everyone can understand it. 
     Please write your responses in concise and understandable way and no longer text.
 
     Current conversation:
@@ -105,7 +136,7 @@ def get_response_ai(human_msg):
     Human: {input}
     AI Assistant:"""
 
-    #-------------------------------------------------------------------
+    # -------------------------------------------------------------------
     # Pulp Version
     # template = """
     # I want you to act as an expert programmer who can write code using Pulp library to solve optimization problems
@@ -166,7 +197,6 @@ def get_response_ai(human_msg):
 
 
 def python_tool():
-
     from langchain.agents import Tool
     from langchain_experimental.utilities import PythonREPL
 
