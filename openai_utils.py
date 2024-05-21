@@ -16,13 +16,22 @@ load_dotenv()
 
 
 def get_llm_model():
+    # llm = AzureChatOpenAI(
+    #     model_name="gpt-35-turbo-16k",
+    #     deployment_name=st.secrets.openai["deployment_name"],
+    #     openai_api_key=st.secrets.openai["openai_api_key"],
+    #     azure_endpoint=st.secrets.openai["azure_endpoint"],
+    #     openai_api_type="azure",
+    #     openai_api_version="2023-03-15-preview"
+    # )
     llm = AzureChatOpenAI(
-        model_name="gpt-35-turbo-16k",
+        # model_name="gpt-35-turbo-16k",
+        model_name = "gpt-4o",
         deployment_name=st.secrets.openai["deployment_name"],
         openai_api_key=st.secrets.openai["openai_api_key"],
         azure_endpoint=st.secrets.openai["azure_endpoint"],
         openai_api_type="azure",
-        openai_api_version="2023-03-15-preview"
+        openai_api_version="2024-02-01"
     )
 
     return llm
