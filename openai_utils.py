@@ -22,7 +22,7 @@ def get_llm_model():
         openai_api_key=st.secrets.openai["openai_api_key"],
         azure_endpoint=st.secrets.openai["azure_endpoint"],
         openai_api_type="azure",
-        openai_api_version="2023-03-15-preview",
+        openai_api_version="2023-03-15-preview"
     )
 
     return llm
@@ -41,7 +41,7 @@ def summarize_messages(chain_input):
             MessagesPlaceholder(variable_name="chat_history"),
             (
                 "user",
-                "Summarize the chat messages into meaningful summarise which contains all specific details"
+                "Summarize the chat messages into meaningful summary which contains all specific details"
             ),
         ]
     )
@@ -82,16 +82,14 @@ def get_response_ai(human_msg):
     # AI Assistant:"""
 
     #------------------------------------------------------------------
-    template = """
-    I want you to act like an Expert Mathematics and Linear Programming Expert who solves optimization problems computationaly.
-    You will be given a problem by Human to optimize metrics. Your Job is to ask questions to complete your
-    prerequiste to solve the optimiztion problems.
-    Once you have completed your formulation then you will do the calculations and will provide the Human with
-    optimal solution and conclusions. 
-    First perform an initial calculation and then recheck it so that no mistake should be there.
-    Once the calculation and optimal solution is found, then you will switch role to being an expert writer and will
-    write the conclusion in such a way that even a layman can understand it. Your answer should contain steps which you have
-    performed to solve the optimization problem and conclusion in the end.
+    template = """I want you to act like an Expert Mathematics and Linear Programming Expert who solves optimization 
+    problems computationaly. You will be given a problem by Human to optimize metrics. Your Job is to ask questions 
+    to complete your prerequisite to solve the optimization problems. Once you have completed your formulation then 
+    you will do the directly perform the calculations. First perform an initial calculation and then recheck it so 
+    that no mistake should be there. Once the calculation and optimal solution is found, then you will switch role to 
+    being an expert writer and will write the conclusion in such a way that even a layman can understand it. Your 
+    answer should contain steps which you have performed to solve the optimization problem and conclusion in the end. 
+    Please write your responses in concise and understandable way and no longer text.
 
     Current conversation:
     {chat_history}
