@@ -15,25 +15,29 @@ if 'constraints' not in st.session_state:
     st.session_state['constraints'] = ""
 
 # Set the title of the app
-st.title("Problem Solver")
+st.title("The GenOptimzer")
 
 # Create text areas for Problem Statement, Objective to Solve, and Constraints
 st.session_state['problem_statement'] = st.text_area("Problem Statement", value=st.session_state['problem_statement'])
-st.session_state['objective_to_solve'] = st.text_area("Objective to Solve", value=st.session_state['objective_to_solve'])
+st.session_state['objective_to_solve'] = st.text_area("Objective to Solve",
+                                                      value=st.session_state['objective_to_solve'])
 st.session_state['constraints'] = st.text_area("Constraints", value=st.session_state['constraints'])
+
 
 # Define the function to get AI response
 def generate_solution():
     with st.spinner("Generating solution..."):
         # Simulate a delay for demonstration purposes
         time.sleep(1)
-        solution = solve_optimization_problem(st.session_state['problem_statement'], st.session_state['objective_to_solve'], st.session_state['constraints'])
+        solution = solve_optimization_problem(st.session_state['problem_statement'],
+                                              st.session_state['objective_to_solve'], st.session_state['constraints'])
         if solution:
             st.session_state['solution'] = solution
             st.session_state['solution_status'] = "Success"
         else:
             st.session_state['solution'] = "Failed to generate solution."
             st.session_state['solution_status'] = "Failed"
+
 
 # Create Submit and Clear buttons
 col1, col2 = st.columns(2)

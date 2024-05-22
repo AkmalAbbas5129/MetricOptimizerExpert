@@ -63,6 +63,7 @@ class InsightsModel(BaseModel):
 
 
 def solve_optimization_problem(problem_statement, objective, constraints):
+    # 4. There should be no calculations in the report just text writings.
     template_string = """
     I want you to act like an Expert Mathematics and Linear Programming Expert who solves optimization 
     problems computationally and the calculations are perfect everytime you solve something.
@@ -83,9 +84,16 @@ def solve_optimization_problem(problem_statement, objective, constraints):
     1. Your calculations will always be perfect.
     2. Do not output anything extra from your own.
     3. Solution to the answer should be written in a format and language which is easy to understand by anyone.
-    4. Don't output calculations, just output answer and explaination of the steps.
+    
 
     Solution Answer:
+    [Insert Results]
+    
+    [Insert Conclusions]
+    
+    [Insert Problem Overview to explain what you understood from the problem]
+    
+    [Insert Solution explained] 
     """
     prompt_template = ChatPromptTemplate.from_template(template_string)
 
