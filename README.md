@@ -6,7 +6,7 @@ The GenOptimizer is a web application designed to solve optimization problems us
 1. [Codebase](#codebase)
 2. [Dependencies](#dependencies)
 3. [Environment Configurations](#environment-configurations)
-4. [Input Data](#input-data)
+4. [Input Data](#Example Input)
 5. [Expected Output](#expected-output)
 6. [Installation and Execution Instructions](#installation-and-execution-instructions)
 7. [Additional Documentation](#additional-documentation)
@@ -75,5 +75,7 @@ Minimize the total transportation cost across all supply routes.
 - Transportation capacity for each route is limited to 500 units per day.
 ```
 ### Example Output
+```markdown
 **Solution:**
 - Optimal solution to the question.
+```
