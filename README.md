@@ -41,8 +41,8 @@ The project relies on several key libraries and services:
 
 To run the application, you'll need to set up environment variables and configuration files. Key configurations include:
 
-- **Azure OpenAI API Credentials**: Store in '.env' for secure access.
-- **Azure Blob Storage**: Connection strings and container names are also stored in `st.secrets`.
+- **Azure OpenAI API Credentials**: Store in `.env` for secure access.
+- **Azure Blob Storage**: Connection strings and container names are also stored in `.env`.
 
 ### Sample `.env` File
 ```env
@@ -51,6 +51,8 @@ AZURE_OPENAI_ENDPOINT = ""
 api_version = ""
 AZURE_DEPLOYMENT_NAME = ""
 AZURE_EMBEDDING_DEPLOYMENT_NAME = ""
+connection_string=""
+container_name=""
 ```
 
 ## Input Data
