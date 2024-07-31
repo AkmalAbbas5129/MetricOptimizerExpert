@@ -15,7 +15,7 @@ The GenOptimizer is a web application designed to solve optimization problems us
 
 ### File Structure
 - `streamlit_app.py`: Main Streamlit application file, handles the UI and integrates with backend services.
-- `openai_utils.py`: Utility functions for interacting with OpenAI's GPT model, including functions for solving optimization problems.
+- `openai_utils.py`: Utility functions for interacting with Azure OpenAI's GPT model, including functions for solving optimization problems.
 - `azure_blob_utils.py`: Utility functions for interacting with Azure Blob Storage, including functions for logging user interactions.
 
 ## Dependencies
@@ -23,7 +23,7 @@ The GenOptimizer is a web application designed to solve optimization problems us
 The project relies on several key libraries and services:
 
 - **Streamlit**: For building the web interface.
-- **OpenAI API**: For natural language processing and generating solutions.
+- **Azure OpenAI**: For natural language processing and generating solutions.
 - **Azure Storage**: For storing logs and user interaction data.
 - **Pandas**: For data manipulation and logging.
 
