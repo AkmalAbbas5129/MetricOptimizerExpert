@@ -7,7 +7,7 @@ The GenOptimizer is a web application designed to solve optimization problems us
 2. [Dependencies](#dependencies)
 3. [Environment Configurations](#environment-configurations)
 4. [Input Data](#example-input)
-5. [Expected Output](#expected-output)
+5. [Expected Output](#example-output)
 6. [Installation and Execution Instructions](#installation-and-execution-instructions)
 7. [Additional Documentation](#additional-documentation)
 
