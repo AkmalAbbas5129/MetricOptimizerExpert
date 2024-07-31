@@ -1,6 +1,6 @@
-# The GenOptimizer
+# OptiGenius - Linaear Optimizer
 
-The GenOptimizer is a web application designed to solve optimization problems using advanced AI and machine learning models. This app leverages the power of Generative AI and Azure services to provide optimal solutions to complex optimization problems, generate insightful answer, and log user interactions for further analysis.
+The OptiGenius - Linaear Optimizer is a streamlit web application designed to solve optimization problems using advanced AI and machine learning models. This app leverages the power of Generative AI and Azure services to provide optimal solutions to complex optimization problems, generate insightful answer, and log user interactions for further analysis.
 
 ## Table of Contents
 1. [Codebase](#codebase)
