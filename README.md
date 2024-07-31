@@ -73,6 +73,7 @@ Minimize the total transportation cost across all supply routes.
 - Each supplier can only supply a maximum of 1000 units.
 - The delivery deadline for all orders is within 5 days.
 - Transportation capacity for each route is limited to 500 units per day.
-
+```
+### Example Output
 **Solution:**
 - Optimal solution to the question.
