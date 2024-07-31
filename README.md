@@ -81,3 +81,8 @@ Minimize the total transportation cost across all supply routes.
 **Solution:**
 - Optimal solution to the question.
 ```
+### Installation and Execution Instructions
+1. **Clone the Repository**
+2. **Install the requirements**: pip install -r requirements.txt
+3. **Setup Environment Variables**: Create .env file and add secret variables there
+4. **Run Application**: streamlit run streamlit_app.py
