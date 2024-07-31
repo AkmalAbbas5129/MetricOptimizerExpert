@@ -28,26 +28,29 @@ The project relies on several key libraries and services:
 - **Pandas**: For data manipulation and logging.
 
 ### Required Python Packages
-- `streamlit`
-- `openai`
 - `azure-storage-blob`
+- `langchain`
+- `langchain_core`
+- `langchain_experimental`
+- `langchain_openai`
 - `pandas`
-- `dotenv`
-- `langchain-core`
-- `langchain-openai`
+- `python-dotenv`
+- `streamlit`
 
 ## Environment Configurations
 
 To run the application, you'll need to set up environment variables and configuration files. Key configurations include:
 
-- **OpenAI API Credentials**: Stored in `st.secrets` for secure access.
+- **Azure OpenAI API Credentials**: Store in '.env' for secure access.
 - **Azure Blob Storage**: Connection strings and container names are also stored in `st.secrets`.
 
 ### Sample `.env` File
 ```env
-OPENAI_API_KEY=your_openai_api_key
-AZURE_STORAGE_CONNECTION_STRING=your_connection_string
-AZURE_STORAGE_CONTAINER_NAME=your_container_name
+AZURE_OPENAI_API_KEY = ""
+AZURE_OPENAI_ENDPOINT = ""
+api_version = ""
+AZURE_DEPLOYMENT_NAME = ""
+AZURE_EMBEDDING_DEPLOYMENT_NAME = ""
 
 ## Input Data
 
@@ -69,3 +72,6 @@ Minimize the total transportation cost across all supply routes.
 - Each supplier can only supply a maximum of 1000 units.
 - The delivery deadline for all orders is within 5 days.
 - Transportation capacity for each route is limited to 500 units per day.
+
+**Solution:**
+- Optimal solution to the question.
