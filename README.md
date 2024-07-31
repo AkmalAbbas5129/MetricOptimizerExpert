@@ -51,7 +51,7 @@ AZURE_OPENAI_ENDPOINT = ""
 api_version = ""
 AZURE_DEPLOYMENT_NAME = ""
 AZURE_EMBEDDING_DEPLOYMENT_NAME = ""
-```env
+```
 
 ## Input Data
 
